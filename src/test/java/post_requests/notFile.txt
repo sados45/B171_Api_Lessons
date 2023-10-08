@@ -1,0 +1,16 @@
+postman not :
+video 5, post ile ilgili kisim.
+1- ilk önce post olusturduk. postumuzu gonderdik.
+
+2-responsedaki token i aliyoruz. allta yer test bölümüne gelerek buraya kaydediyoruz.
+pm.collectionVariables.set("token", pm.response.json().token); set a collection variable secerek yapiyoruz.
+
+3-o da aldi variable butonun icine  icine bunu token olarak ekledi.
+
+4- sonra contact list icinde Authorization icinde Type icinde Bearer Token secip, Token kismina {{token}} yazdik.
+
+5. artik biz login user i ne zaman calistirirsak buradaki token otomatik eklenmis olacaak.
+
+6. sonra get contact list icindeki authorization icindeki type a inherit yaparak otomatik headers a ekleyecek. tokeni
+
+
