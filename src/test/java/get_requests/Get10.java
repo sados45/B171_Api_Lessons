@@ -69,6 +69,39 @@ public class Get10 extends HerokuAppBaseUrl {
 
     @Test
     public void get10Metotlu() {
+        // Set the URL
+        spec.pathParams("first", "booking", "second", 4375);
+        // Set the expected data
+        Map<String, String> bookingDatesData = new HashMap<>();
+        bookingDatesData.put("checkin", "2018-01-01");
+        bookingDatesData.put("checkout", "2019-01-01");
+        Map<String, Object> expectedData = new HashMap<>();
+        expectedData.put("firstname", "Jane");
+        expectedData.put("lastname", "Doe");
+        expectedData.put("totalprice", 111);
+        expectedData.put("depositpaid", true);
+        expectedData.put("bookingdates", bookingDatesData); // kücük olani büyük olanin icine koyduk. büyük olan expecteddata idi.  yukarida bize verilen icice olan veri bilgisine dayali olarak.
+        expectedData.put("additionalneeds", "Extra pillows please");
+
+        // Send the request and get the response
+        Response response = given(spec).when().get("{first}/{second}");
+        response.prettyPrint();
+        // Do assertion
+        Map<String, Object> actualData = response.as(HashMap.class);
+        assertEquals(200, response.statusCode());
+        assertEquals(expectedData.get("firstname"), actualData.get("firstname"));
+        assertEquals(expectedData.get("lastname"), actualData.get("lastname"));
+        assertEquals(expectedData.get("totalprice"), actualData.get("totalprice"));
+        assertEquals(expectedData.get("depositpaid"), actualData.get("depositpaid"));
+        assertEquals(expectedData.get("additionalneeds"), actualData.get("additionalneeds"));
+
+        assertEquals(bookingDatesData.get("checkin"), ((Map)actualData.get("bookingdates")).get("checkin"));
+        assertEquals(bookingDatesData.get("checkout"), ((Map)actualData.get("bookingdates")).get("checkout"));
+
+        // 2. YOL      //yukaridaki son iki satir da map kismi zor oldugu icin kolay yolu asagidadir.
+        JsonPath json = response.jsonPath();
+        assertEquals(bookingDatesData.get("checkin"), json.getString("bookingdates.checkin"));
+        assertEquals(bookingDatesData.get("checkout"), json.getString("bookingdates.checkout"));
 
 
     }
