@@ -25,3 +25,4 @@ public class HerokuAppBaseUrl { // PetStore classini diger metodlarimiza extend 
 }
 
 //post yaparken 1. body ye ihtiyacimiz var, 2. contenttype ihtiyacimiz var.
+
